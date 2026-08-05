@@ -1,0 +1,279 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+:root{
+    --primary: #1877F2;
+    --whatsapp: #25D366;
+    --call: #0d8b45;
+    --location: #F44336;
+    --white: #ffffff;
+    --glass: rgba(255,255,255,0.08);
+    --glass-border: rgba(255,255,255,0.12);
+    --card-radius: 30px;
+    --card-width: 430px;
+    --logo-size: 170px;
+    /* Colors extracted from the logo for subtle background blobs */
+    --deep-blue: #0b3b86;
+    --sky-blue:  #2D6BE6;
+    --green-c:   #25D366;
+    --orange-c:  #F29F05;
+    --yellow-c:  #FFD66B;
+}
+
+/* Base layout — keep centered card as original */
+html, body { height: 100%; }
+body{
+    font-family: 'Cairo', sans-serif;
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    justify-content:center; /* horizontal center (original behavior) */
+    align-items:center;     /* vertical center */
+    padding:20px;
+    background: linear-gradient(135deg,#0d47a1,#1a237e);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+
+/* Premium animated soft blobs implemented via multiple pseudo-elements.
+   Each blob is a single large element (500-800px) blurred heavily and animated
+   using `transform` only for GPU-friendly motion. All blobs use mix-blend-mode: screen
+   and low opacity so they remain subtle and non-distracting. The center remains darker
+   using a radial multiply overlay. */
+
+body{ position: relative; }
+
+/* Blob 1 — Deep Blue (fixed, behind everything) */
+body::before{
+    content:"";
+    position:fixed;
+    left:-20%;
+    top:-18%;
+    width:760px;
+    height:760px;
+    border-radius:50%;
+    background: var(--deep-blue);
+    opacity:0.12;
+    filter: blur(200px) saturate(110%);
+    mix-blend-mode: screen;
+    z-index:0;
+    pointer-events:none;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    animation: floatA 48s ease-in-out infinite alternate;
+}
+
+/* Blob 2 — Sky Blue (large, floats from top-right) */
+.container::before{
+    content:"";
+    position:absolute;
+    left:58%;
+    top:-300px;
+    width:800px;
+    height:800px;
+    border-radius:50%;
+    background: var(--sky-blue);
+    opacity:0.11;
+    filter: blur(200px) saturate(105%);
+    mix-blend-mode: screen;
+    z-index:0;
+    pointer-events:none;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    animation: floatB 36s ease-in-out infinite alternate;
+}
+
+/* Blob 3 — Green (bottom-right, diagonal float) */
+.container::after{
+    content:"";
+    position:absolute;
+    left:-280px;
+    top:120px;
+    width:720px;
+    height:720px;
+    border-radius:50%;
+    background: var(--green-c);
+    opacity:0.10;
+    filter: blur(210px) saturate(105%);
+    mix-blend-mode: screen;
+    z-index:0;
+    pointer-events:none;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    animation: floatC 30s ease-in-out infinite alternate;
+}
+
+/* Blob 4 — Orange (left/bottom area) */
+.buttons::before{
+    content:"";
+    position:absolute;
+    left:10%;
+    top:420px;
+    width:620px;
+    height:620px;
+    border-radius:50%;
+    background: var(--orange-c);
+    opacity:0.09;
+    filter: blur(220px) saturate(105%);
+    mix-blend-mode: screen;
+    z-index:0;
+    pointer-events:none;
+    will-change: transform;
+    transform: translate3d(0,0,0);
+    animation: floatD 42s ease-in-out infinite alternate;
+}
+
+/* Blob 5 — Yellow (subtle, top-center) */
+.logo::after{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:-260px;
+    width:560px;
+    height:560px;
+    transform:translateX(-50%);
+    border-radius:50%;
+    background: var(--yellow-c);
+    opacity:0.085;
+    filter: blur(180px) saturate(105%);
+    mix-blend-mode: screen;
+    z-index:0;
+    pointer-events:none;
+    will-change: transform;
+    animation: floatE 24s ease-in-out infinite alternate;
+}
+
+/* Keep center slightly darker so the card remains readable */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    background:
+        radial-gradient(circle at 50% 50%, rgba(3,8,20,0.0) 0%, rgba(3,8,20,0.36) 52%, rgba(3,8,20,0.52) 100%),
+        /* very subtle noise texture using repeating-linear-gradient */
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.002) 0px, rgba(255,255,255,0.002) 1px, transparent 1px, transparent 2px);
+    mix-blend-mode: multiply;
+    backdrop-filter: blur(6px) saturate(110%);
+}
+
+/* Floating animations — transform-only movement for GPU friendliness */
+@keyframes floatA{
+    0%{ transform: translate3d(0px, 0px, 0) }
+    100%{ transform: translate3d(-60px, 40px, 0) }
+}
+@keyframes floatB{
+    0%{ transform: translate3d(0px, 0px, 0) }
+    100%{ transform: translate3d(40px, -80px, 0) }
+}
+@keyframes floatC{
+    0%{ transform: translate3d(0px, 0px, 0) }
+    100%{ transform: translate3d(-40px, -60px, 0) }
+}
+@keyframes floatD{
+    0%{ transform: translate3d(0px, 0px, 0) }
+    100%{ transform: translate3d(60px, -30px, 0) }
+}
+@keyframes floatE{
+    0%{ transform: translate3d(0px, 0px, 0) }
+    100%{ transform: translate3d(-30px, 50px, 0) }
+}
+
+/* Ensure the card and its content sit above animated blobs */
+.container{ position: relative; z-index: 2 }
+
+/* Card (glassmorphism) — keep original sizing and feel */
+.container{
+    width:100%;
+    max-width:var(--card-width);
+    background: rgba(255,255,255,0.04);
+    border-radius:var(--card-radius);
+    padding:35px;
+    box-shadow: 0 25px 70px rgba(0,0,0,0.35);
+    border:1px solid var(--glass-border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    text-align:center;
+    animation:fadeIn .5s ease both;
+}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Logo — crop to perfect circle, soft white border and shadow */
+.logo{
+    width:var(--logo-size);
+    height:var(--logo-size);
+    object-fit:cover;
+    border-radius:50%;
+    margin-bottom:20px;
+    border:5px solid rgba(255,255,255,0.9); /* soft white border */
+    box-shadow: 0 8px 30px rgba(2,6,23,0.45), 0 0 28px rgba(255,255,255,0.08);
+    transition:transform .35s ease, box-shadow .35s ease;
+}
+.logo:hover{ transform: scale(1.03); }
+
+/* Typography */
+h1{ color:#ffffff; margin-bottom:10px; font-size:28px; }
+p{ color:#E5E7EB; font-size:15px; font-weight:500; margin-bottom:28px }
+
+/* Buttons — keep original widths inside card (do not stretch to page) */
+.buttons{ display:grid; gap:16px; justify-items:center }
+.btn{
+    width:100%;            /* fills container width (keeps ~430px max) */
+    max-width:420px;      /* slightly inset to keep breathing space */
+    display:block;
+    position:relative;
+    padding:16px 64px;    /* leave room for left icon and right arrow */
+    color:var(--white);
+    text-decoration:none;
+    border-radius:20px;
+    font-size:18px;
+    font-weight:700;
+    overflow:hidden;
+    transition: transform .22s ease, box-shadow .22s ease;
+    display:flex; align-items:center; justify-content:center;
+}
+.btn:active{ transform:scale(.98) }
+
+/* Left icon (absolute) — keeps icon visually on the left regardless of text flow */
+.btn i{ position:absolute; left:18px; font-size:24px; width:30px; text-align:center }
+
+/* Centered label (keeps text centered) */
+.btn span{ display:inline-block }
+
+/* Right arrow using pseudo-element so HTML stays unchanged */
+.btn::after{
+    content: '\276F'; /* small chevron */
+    position:absolute; right:18px; font-size:18px; opacity:.95;
+}
+
+/* Hover */
+.btn:hover{ transform:translateY(-4px); box-shadow:0 18px 35px rgba(0,0,0,0.25) }
+
+/* subtle shine */
+.btn::before{ content:""; position:absolute; left:-120%; top:0; width:60%; height:100%; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent); transition: left .6s; }
+.btn:hover::before{ left:120%; }
+
+/* Color variants (preserve original colors) */
+.call{ background: var(--call); }
+.whatsapp{ background: var(--whatsapp); }
+.facebook{ background: var(--primary); }
+.location{ background: var(--location); }
+
+/* Footer */
+footer{ margin-top:30px; color:white; opacity:.8; font-size:14px }
+
+/* Toast (kept minimal) */
+.toast{ position:fixed; left:50%; transform:translateX(-50%); bottom:30px; background:rgba(0,0,0,0.7); color:#fff; padding:10px 16px; border-radius:10px; box-shadow:0 8px 30px rgba(2,6,23,0.6); font-weight:600; opacity:0; pointer-events:none; transition:opacity .18s ease, transform .18s ease }
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(-6px); pointer-events:auto }
+
+/* Responsive tweaks for mobile (QR usage) */
+@media (max-width:480px){
+    :root{ --card-width: 92vw }
+    .container{ padding:26px }
+    .logo{ width:140px; height:140px }
+    .btn{ padding:14px 56px; font-size:16px; }
+}
