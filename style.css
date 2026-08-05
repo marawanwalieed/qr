@@ -23,7 +23,20 @@
 }
 
 /* Base layout — keep centered card as original */
-html, body { height: 100%; }
+html, 
+body {
+  body{
+    min-height:100dvh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:0;
+    padding:20px;
+
+    overflow-x:hidden;
+}
+    }
 body{
     font-family: 'Cairo', sans-serif;
     margin:0;
@@ -35,6 +48,7 @@ body{
     background: linear-gradient(135deg,#0d47a1,#1a237e);
     -webkit-font-smoothing:antialiased;
     -moz-osx-font-smoothing:grayscale;
+
 }
 
 /* Premium animated soft blobs implemented via multiple pseudo-elements.
@@ -285,10 +299,15 @@ body::after,
     animation : none;
     filter:none;
     opacity:0.08;
+    position: fixed;
 }
 .container
 {
 backdrop-filter: blur(12px);
 -webkit-backdrop-filter: blur(12px);
+    position:relative;
+    z-index:10;
+    margin:auto;
+
 }
 }
