@@ -55,9 +55,9 @@ body::before{
     height:760px;
     border-radius:50%;
     background: var(--deep-blue);
-    opacity:0.12;
-    filter: blur(200px) saturate(110%);
-    mix-blend-mode: screen;
+    opacity:0.10;
+filter: blur(70px) saturate(110%);
+    /*mix-blend-mode: screen;*/
     z-index:0;
     pointer-events:none;
     will-change: transform;
@@ -76,7 +76,7 @@ body::before{
     border-radius:50%;
     background: var(--sky-blue);
     opacity:0.11;
-    filter: blur(200px) saturate(105%);
+filter: blur(70px) saturate(110%);
     mix-blend-mode: screen;
     z-index:0;
     pointer-events:none;
@@ -96,7 +96,7 @@ body::before{
     border-radius:50%;
     background: var(--green-c);
     opacity:0.10;
-    filter: blur(210px) saturate(105%);
+    filter: blur(70px) saturate(110%);
     mix-blend-mode: screen;
     z-index:0;
     pointer-events:none;
@@ -104,8 +104,7 @@ body::before{
     transform: translate3d(0,0,0);
     animation: floatC 30s ease-in-out infinite alternate;
 }
-
-/* Blob 4 — Orange (left/bottom area) */
+ 
 .buttons::before{
     content:"";
     position:absolute;
@@ -116,7 +115,7 @@ body::before{
     border-radius:50%;
     background: var(--orange-c);
     opacity:0.09;
-    filter: blur(220px) saturate(105%);
+    filter: blur(70px) saturate(110%);
     mix-blend-mode: screen;
     z-index:0;
     pointer-events:none;
@@ -137,14 +136,13 @@ body::before{
     border-radius:50%;
     background: var(--yellow-c);
     opacity:0.085;
-    filter: blur(180px) saturate(105%);
+filter: blur(70px) saturate(110%);
     mix-blend-mode: screen;
     z-index:0;
     pointer-events:none;
     will-change: transform;
     animation: floatE 24s ease-in-out infinite alternate;
-}
-
+} 
 /* Keep center slightly darker so the card remains readable */
 body::after{
     content:"";
@@ -157,7 +155,7 @@ body::after{
         /* very subtle noise texture using repeating-linear-gradient */
         repeating-linear-gradient(0deg, rgba(255,255,255,0.002) 0px, rgba(255,255,255,0.002) 1px, transparent 1px, transparent 2px);
     mix-blend-mode: multiply;
-    backdrop-filter: blur(6px) saturate(110%);
+    backdrop-filter: blur(6) saturate(110%);
 }
 
 /* Floating animations — transform-only movement for GPU friendliness */
@@ -276,4 +274,21 @@ footer{ margin-top:30px; color:white; opacity:.8; font-size:14px }
     .container{ padding:26px }
     .logo{ width:140px; height:140px }
     .btn{ padding:14px 56px; font-size:16px; }
+}
+
+@media (max-width:760px){
+body::after,
+.container::before,
+.container::after,
+.buttons::before,
+.logo::after{
+    animation : none;
+    filter:none;
+    opacity:0.08;
+}
+.container
+{
+backdrop-filter: blur(12px);
+-webkit-backdrop-filter: blur(12px);
+}
 }
